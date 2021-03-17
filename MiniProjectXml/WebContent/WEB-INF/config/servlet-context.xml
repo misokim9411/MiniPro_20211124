@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- beans의 beans. 서블릿컨테이너 자체에 대한 환경설정 -->
+
+
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+                    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                    http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans.xsd
+                    http://www.springframework.org/schema/context
+                    http://www.springframework.org/schema/context/spring-context.xsd
+                    ">
+	<!-- 요청과 관련된 처리. url관련된 컨트롤러/어노테이션/뷰리졸버/인터셉터/멀티파트리졸버 등의 설정 -->
+
+	<!-- 어노테이션을 가지고있는 컨트롤러를 로딩할 수 있게한다. -->
+	<annotation-driven />
+	<!-- 즉, 21, 23을 이용해서 컨트롤러임을 어노테이션으로 간편하게 인식시키는 방식. -->
+	<context:component-scan
+		base-package="kr.co.softsoldesk.controller" />
+	
+
+	<!-- 디스파쳐에게 뷰에 대한 정보를 전달할때, String타입의 view 이름과 view 오브젝트를 매핑해주는 역할 : InternalResourceViewResolver -->
+	<!-- 컨트롤러 메서드(home()메서드)에서 반환하는 모든 문자열의 앞(prefix, 경로),뒤(suffix, 확장자)에 붙을 
+		경로 설정. 만약 컨트롤러가 “kbh"라는 문자열로 된 뷰 이름을 리턴하면, 뷰 리졸버는 "/WEB-INF/views/kbh.jsp"라는 
+		위치의 JSP 뷰를 참고해서 모델을 이용하여 페이지를 만든다. -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+
+
+
+	<!-- 이미지, 사운드, 동영상, 자바스크립트, css 등의 모든 정적리소스들은 루트아래 resource라는 경로를 지나가도록 
+		설정. 대상: 루트아래 모든것 -->
+	<!-- 리소스 폴더는 다이렉트로 접근할 수 있는 URL로 접근할 수 있게 해줍니다. / / 사이에 폴더명지정. 이미지,CSS 파일등 
+		Get으로 접근하여 사용하고 싶은 파일들을 리소스 폴더로 설정하여 사용하게 됩니다. 출처: https://gocoder.tistory.com/1105 
+		[고코더 IT Express] -->
+
+	<resources location="/resources/" mapping="/**" />
+
+	</beans:beans>
+ 
