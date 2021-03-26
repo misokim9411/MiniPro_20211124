@@ -25,35 +25,49 @@
 		<span class="navbar-toggler-icon"></span>        
 	</button>
 	<div class="collapse navbar-collapse" id="navMenu">
+		
 		<ul class="navbar-nav">
-			<li class="nav-item">
-			     <!-- board/main.jsp로 링크. 이 링크를 잡아서 Board컨트롤러에서 처리. -->
-				<a href="${root }board/main" class="nav-link">자유게시판</a>
+		
+		
+		<!-- DB에 있는 게시판정보관련 리스트 받아와서 forEach문으로 돌려서 세팅한다.(총 4개 세팅됨) -->
+		<c:forEach var ='obj' items="${topMenuList }">
+				<li class="nav-item">    
+				<a href="${root }board/main?board_info_idx=${obj.board_info_idx}" class="nav-link">${obj.board_info_name }</a>
 			</li>
-			<li class="nav-item">
-				<a href="${root }board/main" class="nav-link">유머게시판</a>
-			</li>
-			<li class="nav-item">
-				<a href="${root }board/main" class="nav-link">정치게시판</a>
-			</li>
-			<li class="nav-item">
-				<a href="${root }board/main" class="nav-link">스포츠게시판</a>
-			</li>
-		</ul>
+			</c:forEach>
+			
+			</ul>
+		
+		
+		<!-- 이부분을 실행할때, 로그인과 회원가입은 비로그인 상태에서만보이고, 정보수정과 로그아웃은 로그인 상태에서만 보이도록. -->
+		
+		<!-- 스위치문이용시에는 choose when otherwise로 잡는다 -->
+				
+		<!-- 인터셉터에 올라와있는 loginUserBean의 userLogin상태를 체크한다.  -->
 		
 		<ul class="navbar-nav ml-auto">
-			<li class="nav-item">
-				<a href="${root }user/login" class="nav-link">로그인</a>
-			</li>
-			<li class="nav-item">
-				<a href="${root }user/join" class="nav-link">회원가입</a>
-			</li>
-			<li class="nav-item">
-				<a href="${root }user/modify_user" class="nav-link">정보수정</a>
-			</li>
-			<li class="nav-item">
-				<a href="${root }user/logout" class="nav-link">로그아웃</a>
-			</li>
+			<c:choose>
+				<c:when test="${loginUserBean.userLogin == true }">
+					
+					<li class="nav-item">
+						<a href="${root }user/modify_user" class="nav-link">정보수정</a>
+					</li>
+					<li class="nav-item">
+						<a href="${root }user/logout" class="nav-link">로그아웃</a>
+					</li>
+				</c:when>
+				
+				<c:otherwise>
+					
+					<li class="nav-item">
+						<a href="${root }user/login" class="nav-link">로그인</a>
+					</li>
+					<li class="nav-item">
+						<a href="${root }user/join" class="nav-link">회원가입</a>
+					</li>
+				</c:otherwise>
+			</c:choose>	
 		</ul>
+		
 	</div>
 </nav>

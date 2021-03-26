@@ -163,7 +163,8 @@
 			</div>
 			
 			<div class="text-right">
-				<a href="${root }board/write" class="btn btn-primary">글쓰기</a>
+			<!-- 글쓰기 누르면, 어느 게시판의 글쓰기로 갈지 보드인덱스를 붙여서 간다. -->
+				<a href="${root }board/write?board_info_idx=${board_info_idx}" class="btn btn-primary">글쓰기</a>
 			</div>
 			
 		</div>
